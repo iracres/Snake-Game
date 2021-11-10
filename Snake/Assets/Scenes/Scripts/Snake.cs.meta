@@ -3,7 +3,13 @@ guid: e323ec00b1923d24592a5c4cf579e81d
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - tailPrefab: {fileID: 9109809391494319275, guid: 0f892615d61924d4f860f00d3659b3c6, type: 3}
+  - foodPrefab: {fileID: 8877567287445989844, guid: baa3223eac7839646a4cf69e9158cea8, type: 3}
+  - LeftBorder: {instanceID: 0}
+  - RightBorder: {instanceID: 0}
+  - TopBorder: {instanceID: 0}
+  - BottomBorder: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
