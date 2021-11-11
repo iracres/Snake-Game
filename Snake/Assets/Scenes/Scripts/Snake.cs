@@ -33,13 +33,13 @@ public class Snake : MonoBehaviour
     void Update()
     {
         //check if player changed direction
-        if (Input.GetKey(KeyCode.RightArrow))
+        if (Input.GetKey(KeyCode.RightArrow) && dir != Vector2.left)
             dir = Vector2.right;
-        else if (Input.GetKey(KeyCode.DownArrow))
+        else if (Input.GetKey(KeyCode.DownArrow) && dir != Vector2.up)
             dir = -Vector2.up;
-        else if (Input.GetKey(KeyCode.LeftArrow))
+        else if (Input.GetKey(KeyCode.LeftArrow) && dir != -Vector2.left)
             dir = -Vector2.right;
-        else if (Input.GetKey(KeyCode.UpArrow))
+        else if (Input.GetKey(KeyCode.UpArrow) && dir != -Vector2.up)
             dir = Vector2.up;
     }
 
@@ -47,15 +47,11 @@ public class Snake : MonoBehaviour
     void Move() {
         //save where head is
         Vector2 v = transform.position;
-        Debug.Log("Save Head position: " + v);
 
         transform.Translate(dir);
-        Debug.Log("Move Head to" + transform.position);
         // if ate 
         if (ate) {
-            Debug.Log("Hit Food at " + transform.position);
 				// Load Prefab into the world
-                Debug.Log("grow snake at" + v);
 				GameObject g = (GameObject)Instantiate (tailPrefab,
 					              v,
 					              Quaternion.identity);
@@ -69,7 +65,6 @@ public class Snake : MonoBehaviour
         else if (tail.Count > 0) {	// Do we have a Tail?
 					// Move last Tail Element to where the Head was
 					tail.Last().position = v;
-                    Debug.Log("Move tail to old head positon" + v);
 
 					// Add to front of list, remove from the back
 					tail.Insert(0, tail.Last());
@@ -91,7 +86,7 @@ public class Snake : MonoBehaviour
             Debug.Log(
                 "game Over"
             );
-            // You Lose!!
+            
         }
     }
 
