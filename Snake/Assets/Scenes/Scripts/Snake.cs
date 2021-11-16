@@ -2,11 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using UnityEngine.UI;
 
 public class Snake : MonoBehaviour
 {
+    [SerializeField] private GameObject GameOverUI;
     //sets automatically move right
     Vector2 dir = Vector2.right;
+    private bool dead = false;
+    public Text timerText; 
 
     // Keep Track of Tail
     List<Transform> tail = new List<Transform>();
@@ -14,8 +18,6 @@ public class Snake : MonoBehaviour
     //Did the snake just eat?
     bool ate = false;
     public GameObject tailPrefab;
-
-    //Food Prefab
     public GameObject foodPrefab;
     //Borders
     public Transform LeftBorder;
@@ -26,7 +28,7 @@ public class Snake : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        InvokeRepeating("Move", 0.2f, 0.2f);
+        InvokeRepeating("Move", 0.1f, 0.1f);
     }
 
     // Update is called once per frame
@@ -83,11 +85,23 @@ public class Snake : MonoBehaviour
             Spawn();
 		}
         else {
-            Debug.Log(
-                "game Over"
-            );
-            
+            Debug.Log("Game Over");
+            dead = true;
+            StartCoroutine(GameOver());
         }
+    }
+
+
+    IEnumerator GameOver() {    
+        GameOverUI.SetActive(true);
+        CancelInvoke();
+        timerText.text = "restart in 3 seconds";
+        yield return new WaitForSeconds(1);
+        timerText.text = "restart in 2 seconds";
+        yield return new WaitForSeconds(1);
+        timerText.text = "restart in 1 seconds";
+        yield return new WaitForSeconds(1);
+        Application.LoadLevel(0);
     }
 
     void Spawn() {
@@ -97,5 +111,9 @@ public class Snake : MonoBehaviour
         Debug.Log("New Food at " + Instantiate(foodPrefab,
                     new Vector2(x, y),
                     Quaternion.identity).transform.position);
+    }
+
+    void Pause() {
+            Time.timeScale = 0;
     }
 }
